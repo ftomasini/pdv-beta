@@ -1,0 +1,246 @@
+# Atualização da lista de pacotes
+sudo apt update
+
+# Instalação do Apache
+sudo apt install apache2
+
+# Instalação de Ferramentas necessárias posteriormente
+sudo apt install curl git unzip
+
+# Imstalação das principais bibliotecas PHP utilizadas pelo Laravel
+sudo apt install php7.2 libapache2-mod-php7.2 php7.2-mbstring php7.2-xmlrpc  php7.2-soap php7.2-gd php7.2-xml php7.2-cli php7.2-zip
+
+# Instalação do MySql e do driver de acesso PHP
+sudo apt install mysql-server-5.7 php-mysql php7.2-mysql mysql-client-core-5.7
+
+# Configuração de senha do mysql
+sudo mysql_secure_installation
+
+# Execute o mysql-cli para criar um novo usuário
+sudo mysql
+  GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' IDENTIFIED BY 'user';
+
+# Utilize o novo usuário para criar e remover databases
+mysql -u user -p
+create database databaseteste;
+drop database databaseteste;
+show databases;
+
+# Logar como root
+sudo -i
+cd
+
+# Como root, baixar e executar o instalador do composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
+# Sair do usuário root e voltar ao usuário normal
+exit
+
+# Instalar pacote global de criação de projetos Laravel
+composer global require laravel/installer
+
+# Adicionar o path do pacote anterior à variável de ambiente PATH
+gedit ~/.bashrc
+export PATH=${PATH}:$HOME/.config/composer/vendor/bin
+
+# Testando a instalação
+# Criando uma pasta em seu home para os projetos
+cd ~
+mkdir projetos
+cd projetos
+# Criando o projeto laravel chamado teste
+laravel new teste
+
+ou
+
+composer create-project --prefer-dist laravel/laravel teste
+
+
+# Executando e testando
+cd teste
+php artisan serve
+# Abra seu navegador no endereço http://localhost:8000
+
+
+# Instalação do Nodejs
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install nodejs
+
+
+# Instalação redis
+Armazena em memória dados tipo chave valor
+
+sudo apt install redis-server
+
+Altera redis para ser controlado via systemctl
+
+vim /etc/redis/redis.conf
+
+supervised systemd
+
+
+
+#########################################################################################
+
+mysql usuario root: root
+msql senha: 12345678
+
+mysql usuario: user
+msql senha: 12345678
+
+mysql -u user -p
+
+
+################################ PASTAS DO PROJETO #######################################
+
+Principal pasta é a APP
+
+app>>Http>>Controllers
+
+aqui ficam os controladores
+
+app>>Http>>Controllers>>Auth
+
+aqui ficam os controladores de autenticação
+
+
+
+
+app>>Exceptions
+
+aqui ficam o controle de exceções do framework, caso queira personalizar alguma esse é o arquivo
+
+
+app>>Console
+
+Criar comandos que serão exucutados via terminal
+
+app>>
+Aqui dentro dessa pasta mesmo ficarão os Models modelos que fazem o meio de campo com os views e Controller.
+É possivel criar aqui dentro pastas de modelos para ficar mais organizado.
+
+
+app>>Providers
+Aqui são classes responsáveis pela inicialização do projeto em laravel.
+Nesse diretório é encontrado aqui o arquivo AppServiceProvider.php que faz registro de pacote de views e etc
+
+
+app>>Http>>Middleware
+
+São classes chamadas através da requisição do cliente, serve pra interceptar acesso do cliente
+
+
+
+
+
+bootstrap
+
+
+Pasta responsável por boot de inicialização
+
+
+config
+
+
+Pasta responsável pela configuração do projeto em Laravel
+
+
+database
+
+pasta responsável por armazenar arquivos relacionados a base de dados
+
+
+database>>migrations
+
+estrutura da base de dados
+
+database>>migrations>>qseeds
+
+dados padroes (usuários, produtos)
+
+
+
+
+
+public
+
+aqui a pasta que fica visível ao servidor apache
+aqui tem o arquivo index.php que é o primeiro a ser acessado
+
+aqui tem as pastas css e js 
+
+
+resources
+
+
+resources>>js
+aqui fica a parte javascript, diferentemente da pasta js da pasta public aqui ficam os arquivos que ainda não foram compilados pela aplicação.
+ver como compila
+
+
+
+resources>>lang
+
+aqui fica o idioma a ser usado, por padrão é ES mas se baixar o pacote ptbr e colocar dentro dessa pasta e configurar no arquivo config>>app.php fica em portugues
+
+resources>>views
+
+aqui fica os arquivos de views de todos os forms
+
+
+routes
+
+aqui ficam todos os arquivos de rotas do sistema.
+
+
+storage
+
+aqui a principal funcionalidade é armazenar arquivos, ex (arquivo de log)
+
+
+tests
+
+testes da aplicação com php unit por exemplo
+
+vendor
+
+aqui fica armazenado todo o core do laravel com suas dependências, essa pasta não deve ser mexida e não precisa ser mandada para o git do projeto pois pode ser recuperada facilmente com o comando "composer install"
+O arquivo composer.json armazena todas as dependências do projeto que é instalado com o comando "composer install"
+
+
+
+
+arquivo .env
+
+Aqui fica armazenada as configurações de variáveis de ambiente como:
+
+configuração de banco de dados
+nome da aplicação
+chave da aplicação 
+url da aplicação
+sessão
+cache
+servidor de email
+pusher
+
+normalmente esse aquivo não vai no git do projeto, pois são configurações locais. (colocar no arquivo .gitignore)
+
+
+
+arquivo package.json
+
+aqui vai ser bastante utilizado quando for usar a biblioteca npm do nodejs
+
+
+phpunit.xml
+
+arquivo de configuração de testes
+
+artisan
+
+script muito utilizado no projeto laravel para
+
+
+
+
+
