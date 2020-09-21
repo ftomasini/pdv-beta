@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,3 +80,32 @@ Route::get('todososprodutos2', function(){
     return redirect()->route('meusprodutos');
 });
 
+//Teste com outros métodos além de get
+//foi colocado no arquivo abaixo exeção para não fazer verificação Csrf
+//home/ftomasini/projetos/teste/app/Http/Middleware/VerifyCsrfToken.php
+//na variavel $request são os dados que estao chegando via webservice nessa rota 
+
+Route::post('requisicoes', function(Request $request){
+    return 'Hello POST';
+});
+Route::delete('requisicoes', function(Request $request){
+    return 'Hello DELETE';
+});
+Route::put('requisicoes', function(Request $request){
+    return 'Hello PUT';
+});
+Route::patch('requisicoes', function(Request $request){
+    return 'Hello PATCH';
+});
+Route::options('requisicoes', function(Request $request){
+    return 'Hello OPTIONS';
+});
+Route::patch('requisicoes', function(Request $request){
+    return 'Hello PATCH';
+});
+
+//Rota com controlador
+Route::get('produto', 'MeuControlador@produto');
+Route::get('nome', 'MeuControlador@getNome');
+Route::get('idade', 'MeuControlador@getIdade');
+Route::get('multiplicar/{n1}/{n2}', 'MeuControlador@multiplicar');
