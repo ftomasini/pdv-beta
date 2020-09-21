@@ -108,4 +108,5 @@ Route::patch('requisicoes', function(Request $request){
 Route::get('produto', 'MeuControlador@produto');
 Route::get('nome', 'MeuControlador@getNome');
 Route::get('idade', 'MeuControlador@getIdade');
+//Controlador com parâmetro
 Route::get('multiplicar/{n1}/{n2}', 'MeuControlador@multiplicar');
