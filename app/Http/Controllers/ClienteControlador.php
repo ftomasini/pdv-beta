@@ -6,6 +6,26 @@ use Illuminate\Http\Request;
 
 class ClienteControlador extends Controller
 {
+
+    private $clientes = [
+        ['id'=>1,'nome'=>'Fabiano'],
+        ['id'=>2,'nome'=>'Jonas Diel'],
+        ['id'=>3,'nome'=>'Jonas Fronchetti'],
+        ['id'=>4,'nome'=>'Jamiel Spezia']
+    ];
+
+
+    public function __construct()
+    {
+        $clientes = session('clientes');
+
+        if(!isset($clientes))
+        {
+            session(['clientes'=>$this->clientes]);
+        }
+    }
+
+
     /**
      * 
      * Acessar uma determinada rota e mostrar por exemplo uma pagina inicial
@@ -16,7 +36,31 @@ class ClienteControlador extends Controller
      */
     public function index()
     {
+        $clientes = session('clientes');
+        //return view('clientes.index', ['clientes'=>$clientes]);
+
+        // ou
+
+        //return view('clientes.index', compact(['clientes']));
+
+        // ou
+        // O comando with é utilizado para passar parametros do controller para a view
+        return view('clientes.index')
+        ->with('clientes',$clientes)
+        ->with('titulo','Todos os clientes')
+        ;
+
+        /*
         //
+        echo "<ol>";
+        
+        foreach($this->clientes as $c)
+        {
+            echo "<li>" . $c['nome'] . "</li>";
+        }
+        
+        echo "</ol>";
+        */
     }
     
 
@@ -29,6 +73,7 @@ class ClienteControlador extends Controller
     public function create()
     {
         //
+        return view("clientes.create");
     }
 
     /**
@@ -42,7 +87,27 @@ class ClienteControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Todos os dados
+        //$dados = $request->all();
+        
+        $clientes = session('clientes');
+        $id = end($clientes)['id'] + 1;
+        $nome = $request->nome;
+        $dados = ["id"=>$id, "nome"=>$nome];
+        $clientes[] = $dados;
+
+        session(['clientes'=>$clientes]);
+
+        //Assim é o correto, porém como não estamos usando banco de dados ainda
+        return redirect()->route('clientes.index');
+        
+        //Debug de informações
+        //dd($dados);
+
+        //return view('clientes.index', ['clientes'=>$clientes]);
+
+
+
     }
 
     /**
@@ -57,6 +122,13 @@ class ClienteControlador extends Controller
     public function show($id)
     {
         //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+
+        $cliente = $clientes[$index];
+
+        return view('clientes.info', compact('cliente'));
+
     }
 
     /**
@@ -71,6 +143,12 @@ class ClienteControlador extends Controller
     public function edit($id)
     {
         //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+
+        $cliente = $clientes[$index];
+
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -84,6 +162,16 @@ class ClienteControlador extends Controller
     public function update(Request $request, $id)
     {
         //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+
+        $clientes[$index]['nome'] = $request->nome;
+
+
+        session(['clientes'=>$clientes]);
+
+        //Assim é o correto, porém como não estamos usando banco de dados ainda
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -95,6 +183,20 @@ class ClienteControlador extends Controller
      */
     public function destroy($id)
     {
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+        array_splice($clientes, $index,1);
+
+        session(['clientes'=>$clientes]);
         //
+        return redirect()->route('clientes.index');
+    }
+
+
+    private function getIndex($id, $clientes)
+    {
+        $ids = array_column($clientes,'id');
+        $index = array_search($id, $ids);
+        return $index;
     }
 }
