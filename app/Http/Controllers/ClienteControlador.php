@@ -47,20 +47,7 @@ class ClienteControlador extends Controller
         // O comando with é utilizado para passar parametros do controller para a view
         return view('clientes.index')
         ->with('clientes',$clientes)
-        ->with('titulo','Todos os clientes')
-        ;
-
-        /*
-        //
-        echo "<ol>";
-        
-        foreach($this->clientes as $c)
-        {
-            echo "<li>" . $c['nome'] . "</li>";
-        }
-        
-        echo "</ol>";
-        */
+        ->with('titulo','Todos os clientes');
     }
     
 
