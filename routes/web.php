@@ -64,7 +64,7 @@ Route::prefix('/app')->group(function() {
 
 });
 
-Route::get('/produtos', function (){
+Route::get('/produtosx', function (){
     echo "<h1>Produtos</h1>";
     echo "<ol>";
     echo "<li>Notebook</li>";
@@ -114,3 +114,23 @@ Route::get('multiplicar/{n1}/{n2}', 'MeuControlador@multiplicar');
 
 //Link a rota diretamente com o controlador
 Route::resource('clientes', 'ClienteControlador');
+
+
+Route::get('produtos', function(){
+    return view('outras.produtos');
+})->name('produtos');
+
+Route::get('departamentos', function(){
+    return view('outras.departamentos');
+})->name('departamentos');
+
+Route::get('opcoes/{opcao?}', function($opcao=null){
+    return view('outras.opcoes',compact(['opcao']));
+})->name('opcoes');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('bootstrap', function(){
+    return view('outras.exemplo');
+})->name('exemplobootstrap');

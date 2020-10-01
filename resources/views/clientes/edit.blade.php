@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('titulo', 'Clientes - Editar')
+
 @section('conteudo')
 <h3>Novo cliente</h3>
 <form action="{{route('clientes.update', $cliente['id'])}}" method="POST">
